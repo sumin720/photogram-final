@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   root "photos#index"
 
   resources :photos do
@@ -16,3 +17,4 @@ Rails.application.routes.draw do
 
   resources :follow_requests, only: [:create, :destroy]
 end
+

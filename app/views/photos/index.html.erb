@@ -1,2 +1,26 @@
-<h1>Photos#index</h1>
-<p>Find me in app/views/photos/index.html.erb</p>
+<h1>List of photos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Caption</th>
+      <th>Owner</th>
+      <th>Posted</th>
+      <th>Likes</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @photos.each do |photo| %>
+      <tr>
+        <td><%= image_tag photo.image if photo.image.attached? %></td>
+        <td><%= photo.caption %></td>
+        <td><%= photo.owner.username %></td>
+        <td><%= time_ago_in_words(photo.created_at) %> ago</td>
+        <td><%= photo.likes.count %></td>
+        <td><%= link_to 'Show details', photo_path(photo) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -10,6 +10,12 @@
 #  sender_id    :integer
 #
 class FollowRequest < ApplicationRecord
-  belongs_to :sender, class_name: "User"
-  belongs_to :recipient, class_name: "User"
+  # Associations
+  belongs_to :recipient, class_name: 'User'
+  belongs_to :sender, class_name: 'User'
+
+  # Validations
+  validates :status, presence: true, inclusion: { in: %w[pending accepted rejected] }
+  validates :recipient_id, presence: true
+  validates :sender_id, presence: true
 end

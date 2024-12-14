@@ -12,7 +12,16 @@
 #  owner_id       :integer
 #
 class Photo < ApplicationRecord
-  belongs_to :owner, class_name: "User"
-  has_many :comments
-  has_many :likes
+  # Associations
+  belongs_to :owner, class_name: 'User', counter_cache: :photos_count
+  has_many :comments, dependent: :destroy
+  has_many :likes, dependent: :destroy
+
+  # Validations
+  validates :image, presence: true
+  validates :owner_id, presence: true
+
+  # Attach image using Active Storage
+  has_one_attached :image
 end
+
