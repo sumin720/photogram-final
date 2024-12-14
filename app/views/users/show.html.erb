@@ -1,0 +1,28 @@
+# app/views/users/show.html.erb
+<h1><%= @user.username %>'s Profile</h1>
+
+<h2>Photos:</h2>
+<ul>
+  <% @photos.each do |photo| %>
+    <li>
+      <p>Caption: <%= photo.caption %></p>
+      <p>Likes: <%= photo.likes.count %></p>
+      <p>Posted at: <%= photo.created_at.strftime('%Y-%m-%d %H:%M:%S') %></p>
+    </li>
+  <% end %>
+</ul>
+
+<% if @user != current_user %>
+  <% if current_user.follows?(@user) %>
+    <%= link_to 'Unfollow', follow_requests_path(recipient_id: @user.id), method: :delete %>
+  <% else %>
+    <%= link_to 'Follow', follow_requests_path(recipient_id: @user.id), method: :post %>
+  <% end %>
+<% end %>
+
+<h2>Pending Follow Requests:</h2>
+<ul>
+  <% @user.pending_follow_requests.each do |request| %>
+    <li><%= request.sender.username %></li>
+  <% end %>
+</ul>
